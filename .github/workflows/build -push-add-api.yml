@@ -1,0 +1,43 @@
+name: build and push to ACR iamarund.azurecr.io
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: todo-add-tasks-api
+      IMAGE_TAG: v1
+      ACR_NAME: iamarund
+      ACR_LOGIN_SERVER: iamarund.azurecr.io
+    steps:
+    - name: checkout code
+      uses: actions/checkout@v4
+
+    - name: Azure Login
+      uses: Azure/login@v2.3.0
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID}}
+        
+    - name: login to ACR
+      run: | 
+        az acr login --name $ACR_NAME
+        
+    - name: build image
+      run: | 
+        docker build -t $IMAGE_NAME:$IMAGE_TAG .
+
+    - name: tag image
+      run: |
+        docker tag $IMAGE_NAME:$IMAGE_TAG $ACR_LOGIN_SERVER/$IMAGE_NAME:$IMAGE_TAG
+        
+    - name: push image to ACR
+      run: |
+        docker push $ACR_LOGIN_SERVER/$IMAGE_NAME:$IMAGE_TAG
