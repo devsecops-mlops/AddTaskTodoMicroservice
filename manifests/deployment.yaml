@@ -16,7 +16,7 @@ spec:
       - name: add-task
         env:
           - name: CONNECTION_STRING
-            value: "Driver={ODBC Driver 17 for SQL Server};Server=tcp:devopsinsiderssrv.database.windows.net,1433;Database=todoapp;Uid=devopsadmin;Pwd=P@ssw01rd@123;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
-        image: devopsinsiders/add-task
+            value: Driver={ODBC Driver 18 for SQL Server};Server=tcp:microtodoapp2007.database.windows.net,1433;Database=todo-db1;Uid=sql_admin;Pwd=Redhat@1234;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;
+        image: iamarund.azurecr.io/todo-add-tasks-api:v1
         ports:
         - containerPort: 8000

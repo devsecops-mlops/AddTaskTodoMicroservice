@@ -3,10 +3,11 @@ kind: Ingress
 metadata:
   name: add-task-ingress
   annotations:
-    kubernetes.io/ingress.class: addon-http-application-routing  
+    kubernetes.io/ingress.class: addon-http-application-routing
 spec:
+  ingressClassName: nginx
   rules:
-  - host: add-task.devopsinsiders.online
+  - host: add-task-api.devsecopsguide.online
     http:
       paths:
       - pathType: Prefix
@@ -14,5 +15,5 @@ spec:
         backend:
           service:
             name: add-task
-            port: 
+            port:
               number: 80
