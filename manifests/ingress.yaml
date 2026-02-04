@@ -2,8 +2,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: add-task-ingress
-  annotations:
-    kubernetes.io/ingress.class: addon-http-application-routing
 spec:
   ingressClassName: nginx
   rules:
